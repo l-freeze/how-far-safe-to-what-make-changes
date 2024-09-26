@@ -4,6 +4,15 @@
 まずはコードの可読性を理論的に体感してみましょう。   
 呼び出す側よりも呼び出される側の可読性が重要です。
 
+# 答え
+型で語る  
+[関数名を意味のない名前にした場合](https://github.com/l-freeze/how-far-safe-to-what-make-changes/tree/version/001-change-func-x) - このコードの処理を追えるでしょうか？  
+[引数名、変数名もを意味のない名前にした場合](https://github.com/l-freeze/how-far-safe-to-what-make-changes/tree/version/002-change-parameter) - このコードの処理を追えるでしょうか？
+
+どこまで改変したら読めなくなるの試してみてください。
+
+
+
 # 選考フロー仮
 
 ```mermaid
