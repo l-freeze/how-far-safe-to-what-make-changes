@@ -70,10 +70,10 @@ export class RecruitmentSelection
         console.log(`採用結果 = ${result3.result}`);
     }
 
-    static #func1(applicant: Applicant): ScreeningResult {
-        const checkResult: CheckResult = Filterings.funcA(20, 30, applicant.age);
-        console.log(`年齢制限チェック = ${checkResult}`);
-        if (!checkResult) {
+    static #func1(param: Applicant): ScreeningResult {
+        const r1: CheckResult = Filterings.funcA(20, 30, param.age);
+        console.log(`年齢制限チェック = ${r1}`);
+        if (!r1) {
             return {
                 result: Result.Rejected,
                 stage: InterviewStage.FirstInterview,
@@ -81,10 +81,10 @@ export class RecruitmentSelection
             } as Rejected;
         }
 
-        const requiredSkills: RequiredSkills = Object.values(RequiredSkillName);
-        const checkRequiredSkillsResult: CheckResult = Filterings.funcB(requiredSkills, applicant.skills);
-        console.log(`必須スキルチェック = ${checkRequiredSkillsResult}`);
-        if (!checkRequiredSkillsResult) {
+        const dependencyParameter1: RequiredSkills = Object.values(RequiredSkillName);
+        const r2: CheckResult = Filterings.funcB(dependencyParameter1, param.skills);
+        console.log(`必須スキルチェック = ${r2}`);
+        if (!r2) {
             return {
                 result: Result.Rejected,
                 stage: InterviewStage.FirstInterview,
@@ -92,9 +92,9 @@ export class RecruitmentSelection
             } as Rejected;
         }
 
-        const optionalSkills: OptionalSkills = Object.values(OptionalSkillName);
-        const checkOptionalSkillsResult:SkillCount = Filterings.funcC(optionalSkills, applicant.skills);
-        console.log(`歓迎スキルの個数 = ${checkOptionalSkillsResult}`);
+        const dependencyParameter2: OptionalSkills = Object.values(OptionalSkillName);
+        const r3:SkillCount = Filterings.funcC(dependencyParameter2, param.skills);
+        console.log(`歓迎スキルの個数 = ${r3}`);
 
         return {
             result: Result.Recruitment,
@@ -161,32 +161,32 @@ type OptionalSkills = OptionalSkillName[];
  */
 class Filterings {
     static funcA(
-        lowerLimit: LowerLimit,
-        upperLimit: UpperLimit,
-        age: Age
+        x: LowerLimit,
+        y: UpperLimit,
+        z: Age
     ): CheckResult {
-        return age >= lowerLimit && age <= upperLimit;
+        return z >= x && z <= y;
     }
 
     /**
      * 必須スキルを持っているかを返す
      */
     static funcB(
-        requiredSkills: RequiredSkills,
-        personSkills: ApplicantSkill[]
+        x: RequiredSkills,
+        y: ApplicantSkill[]
     ): CheckResult {
-        return requiredSkills.every((skill) => personSkills.includes(skill));
+        return x.every((skill) => y.includes(skill));
     }
 
     /**
      * 歓迎スキルをいくつ持っているかを返す
      */
     static funcC(
-        optionalSkills: OptionalSkills,
-        personSkills: ApplicantSkill[]
+        x: OptionalSkills,
+        y: ApplicantSkill[]
     ): number {
-        return optionalSkills
-            .filter((skill) => personSkills.includes(skill))
+        return x
+            .filter((skill) => y.includes(skill))
             .length;
     }
 }
