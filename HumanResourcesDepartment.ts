@@ -59,7 +59,7 @@ export class RecruitmentSelection
 {
 
     static execute(applicant: Applicant) {
-        const result1: ScreeningResult = this.#firstInterview(applicant);
+        const result1: ScreeningResult = this.#func1(applicant);
         if (result1.result === Result.Rejected) {
             console.log(`不採用理由 = ${result1.reason}`);
             return;
@@ -70,8 +70,8 @@ export class RecruitmentSelection
         console.log(`採用結果 = ${result3.result}`);
     }
 
-    static #firstInterview(applicant: Applicant): ScreeningResult {
-        const checkResult: CheckResult = Filterings.checkAge(20, 30, applicant.age);
+    static #func1(applicant: Applicant): ScreeningResult {
+        const checkResult: CheckResult = Filterings.funcA(20, 30, applicant.age);
         console.log(`年齢制限チェック = ${checkResult}`);
         if (!checkResult) {
             return {
@@ -82,7 +82,7 @@ export class RecruitmentSelection
         }
 
         const requiredSkills: RequiredSkills = Object.values(RequiredSkillName);
-        const checkRequiredSkillsResult: CheckResult = Filterings.checkRequiredSkill(requiredSkills, applicant.skills);
+        const checkRequiredSkillsResult: CheckResult = Filterings.funcB(requiredSkills, applicant.skills);
         console.log(`必須スキルチェック = ${checkRequiredSkillsResult}`);
         if (!checkRequiredSkillsResult) {
             return {
@@ -93,7 +93,7 @@ export class RecruitmentSelection
         }
 
         const optionalSkills: OptionalSkills = Object.values(OptionalSkillName);
-        const checkOptionalSkillsResult:SkillCount = Filterings.checkOptionalSkills(optionalSkills, applicant.skills);
+        const checkOptionalSkillsResult:SkillCount = Filterings.funcC(optionalSkills, applicant.skills);
         console.log(`歓迎スキルの個数 = ${checkOptionalSkillsResult}`);
 
         return {
@@ -160,7 +160,7 @@ type OptionalSkills = OptionalSkillName[];
  * 応募者のスキルをフィルタリングするクラス
  */
 class Filterings {
-    static checkAge(
+    static funcA(
         lowerLimit: LowerLimit,
         upperLimit: UpperLimit,
         age: Age
@@ -171,7 +171,7 @@ class Filterings {
     /**
      * 必須スキルを持っているかを返す
      */
-    static checkRequiredSkill(
+    static funcB(
         requiredSkills: RequiredSkills,
         personSkills: ApplicantSkill[]
     ): CheckResult {
@@ -181,7 +181,7 @@ class Filterings {
     /**
      * 歓迎スキルをいくつ持っているかを返す
      */
-    static checkOptionalSkills(
+    static funcC(
         optionalSkills: OptionalSkills,
         personSkills: ApplicantSkill[]
     ): number {
